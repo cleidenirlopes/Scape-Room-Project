@@ -358,17 +358,17 @@ witch3 = get_base64("D:\Project\Scape Room Project\Scape-Room-Project\Reources\c
 floating_effect = f"""
 <style>
 @keyframes floaty {{
-  0% {{ transform: translateY(0px) rotate(0deg); opacity: 1; }}
-  50% {{ transform: translateY(-30px) rotate(5deg); opacity: 0.6; }}
-  100% {{ transform: translateY(0px) rotate(-5deg); opacity: 1; }}
+    0% {{ transform: translateY(0px) rotate(0deg); opacity: 1; }}
+    50% {{ transform: translateY(-30px) rotate(5deg); opacity: 0.6; }}
+    100% {{ transform: translateY(0px) rotate(-5deg); opacity: 1; }}
 }}
 
 .floating-img {{
-  position: fixed;
-  width: 100px;
-  z-index: 0;
-  animation: floaty 6s ease-in-out infinite;
-  pointer-events: none;
+    position: fixed;
+    width: 100px;
+    z-index: 0;
+    animation: floaty 6s ease-in-out infinite;
+    pointer-events: none;
 }}
 
 .f1 {{ top: 10%; left: 5%; animation-delay: 0s; }}

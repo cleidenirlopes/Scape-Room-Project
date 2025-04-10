@@ -1,0 +1,10 @@
+
+[build]
+  # Define the base directory where Netlify should find your code
+  publish = "/"
+  command = "streamlit run app.py"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
