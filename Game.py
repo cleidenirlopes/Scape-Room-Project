@@ -3,6 +3,7 @@ from PIL import Image
 import os
 import base64
 
+
 # ==========================
 # 🌟 1. INITIALIZATION
 # ==========================
@@ -30,6 +31,7 @@ if 'puzzle_livingroom_solved' not in st.session_state:
 # ==========================
 # 🎨 2. UI STYLING
 # ==========================
+
 
 inventory_bg_color = "#2F2A25"   # Deep Brown
 button_color = "#D64218"        # Dark Red
@@ -106,15 +108,8 @@ def display_room_image(room_name):
         if os.path.exists(image_path):
             try:
                 image = Image.open(image_path)
-                # Set the caption based on the room_name
-                caption = "Welcome to the Adventure Game!" if room_name == "start" else f"You are in the {room_name.replace('_', ' ').title()}"
-                
-                # Show the image with the caption
-                st.image(image, caption=None, use_container_width=True)  # Using use_container_width instead of use_column_width
-                
-                # Display the caption in a centered, larger font size, with reduced margin
-                st.markdown(f"<h1 style='font-size: 30px; color: ##A5ABAF; text-align: center; margin-top: -10px;'>{caption}</h1>", unsafe_allow_html=True)
-            
+                caption = "Welcome to the Adventure!" if room_name == "start" else f"You are in the {room_name.replace('_', ' ').title()}"
+                st.image(image, caption=caption, use_container_width=True)
             except Exception as e:
                 st.error(f"Error loading image for {room_name}: {e}")
         else:
@@ -339,22 +334,47 @@ elif st.session_state['inventory']['room'] == "living_room":
     living_room()
 elif st.session_state['inventory']['room'] == "end":
     end_screen()
+# ==========================
+# 🕹️ 11. AMATION ICONS
+# ==========================
 
+import base64
+import os
+import streamlit as st
 
-
-
-
-# Função para codificar imagem como base64
+# Function to encode image to base64
 def get_base64(path):
     with open(path, "rb") as file:
         return base64.b64encode(file.read()).decode()
 
-# Pegando imagens
-witch1 = get_base64("D:\Project\Scape Room Project\Scape-Room-Project\Reources\9131013.png")
-witch2 = get_base64("D:\Project\Scape Room Project\Scape-Room-Project\Reources\R.png")
-witch3 = get_base64("D:\Project\Scape Room Project\Scape-Room-Project\Reources\castel.png")
+# Image paths (corrected to use 'Reources' folder)
+image_paths = [
+   
+    "Reources/R.png", 
+    "Reources/ghoust.com.png", 
+    "Reources/fire.com.png", 
+    "Reources/bon.com.png", 
+    "Reources/Asdeqads.png", 
+    "Reources/sS.png", 
+    "Reources/kjkj.png"
+]
 
-# Estilo + Imagens Flutuantes
+# Check if all files exist before loading them
+for path in image_paths:
+    if not os.path.exists(path):
+        st.warning(f"File not found: {path}")
+
+# Encode images to base64
+
+witch2 = get_base64("Reources/R.png")
+witch3 = get_base64("Reources/ghoust.com.png")
+witch4 = get_base64("Reources/fire.com.png")
+witch5 = get_base64("Reources/bon.com.png")
+witch6 = get_base64("Reources/Asdeqads.png")
+witch7 = get_base64("Reources/sS.png")
+witch8 = get_base64("Reources/kjkj.png")
+
+# Floating images style + animation
 floating_effect = f"""
 <style>
 @keyframes floaty {{
@@ -365,31 +385,61 @@ floating_effect = f"""
 
 .floating-img {{
     position: fixed;
-    width: 100px;
+    width: 200px;
     z-index: 0;
     animation: floaty 6s ease-in-out infinite;
     pointer-events: none;
 }}
 
 .f1 {{ top: 10%; left: 5%; animation-delay: 0s; }}
-.f2 {{ top: 40%; left: 80%; animation-delay: 1s; }}
-.f3 {{ top: 70%; left: 30%; animation-delay: 2s; }}
+.f2 {{ top: 20%; left: 25%; animation-delay: 1s; }}
+.f3 {{ top: 30%; left: 45%; animation-delay: 2s; }}
+.f4 {{ top: 40%; left: 65%; animation-delay: 3s; }}
+.f5 {{ top: 50%; left: 85%; animation-delay: 4s; }}
+.f6 {{ top: 60%; left: 15%; animation-delay: 5s; }}
+.f7 {{ top: 70%; left: 35%; animation-delay: 6s; }}
+.f8 {{ top: 80%; left: 55%; animation-delay: 7s; }}
 </style>
 
-<img src="data:image/png;base64,{witch1}" class="floating-img f1">
 <img src="data:image/png;base64,{witch2}" class="floating-img f2">
 <img src="data:image/png;base64,{witch3}" class="floating-img f3">
+<img src="data:image/png;base64,{witch4}" class="floating-img f4">
+<img src="data:image/png;base64,{witch5}" class="floating-img f5">
+<img src="data:image/png;base64,{witch6}" class="floating-img f6">
+<img src="data:image/png;base64,{witch7}" class="floating-img f7">
+<img src="data:image/png;base64,{witch8}" class="floating-img f8">
 """
 
-# Adicionando as imagens flutuantes
+# Add floating images to the page
 st.markdown(floating_effect, unsafe_allow_html=True)
 
-# Som de fundo (loop automático)
-audio_file = open("D:\Project\Scape Room Project\Scape-Room-Project\Reources\atmosphere-dark-33.mp3", "rb")
-audio_bytes = audio_file.read()
+# Load and encode the audio file
+sound_path = "Reources/atmosphere-dark-33.mp3"
+try:
+    with open(sound_path, "rb") as sound_file:
+        b64_sound = base64.b64encode(sound_file.read()).decode()
 
-st.markdown("""
-<audio autoplay loop>
-  <source src="data:audio/mp3;base64,{}" type="audio/mp3">
-</audio>
-""".format(base64.b64encode(audio_bytes).decode()), unsafe_allow_html=True)
+    # HTML and JavaScript code to play audio when clicked
+    html_code = f"""
+    <!DOCTYPE html>
+    <html>
+    <head></head>
+    <body>
+    <script>
+    let audio = new Audio("data:audio/mp3;base64,{b64_sound}");
+    audio.loop = true;
+    document.addEventListener("click", function() {{
+        audio.play();
+    }}, {{ once: true }});
+    </script>
+    </body>
+    </html>
+    """
+
+    # Render HTML with audio in Streamlit
+    st.markdown(html_code, unsafe_allow_html=True)
+
+except FileNotFoundError:
+    st.warning(f"Audio file not found at: {sound_path}")
+except Exception as e:
+    st.error(f"Error loading or encoding audio: {e}")
