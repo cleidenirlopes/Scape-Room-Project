@@ -338,9 +338,6 @@ elif st.session_state['inventory']['room'] == "end":
 # 🕹️ 11. AMATION ICONS
 # ==========================
 
-import base64
-import os
-import streamlit as st
 
 # Function to encode image to base64
 def get_base64(path):
@@ -349,14 +346,15 @@ def get_base64(path):
 
 # Image paths (corrected to use 'Reources' folder)
 image_paths = [
-   
     "Reources/R.png", 
     "Reources/ghoust.com.png", 
-    "Reources/fire.com.png", 
+    
     "Reources/bon.com.png", 
     "Reources/Asdeqads.png", 
     "Reources/sS.png", 
-    "Reources/kjkj.png"
+    "Reources/kjkj.png",
+    "Reources/moon.png",
+    "Reources/boton.png"
 ]
 
 # Check if all files exist before loading them
@@ -365,14 +363,12 @@ for path in image_paths:
         st.warning(f"File not found: {path}")
 
 # Encode images to base64
-
 witch2 = get_base64("Reources/R.png")
 witch3 = get_base64("Reources/ghoust.com.png")
-witch4 = get_base64("Reources/fire.com.png")
-witch5 = get_base64("Reources/bon.com.png")
 witch6 = get_base64("Reources/Asdeqads.png")
 witch7 = get_base64("Reources/sS.png")
-witch8 = get_base64("Reources/kjkj.png")
+witch9 = get_base64("Reources/moon.png")     
+witch10 = get_base64("Reources/boton.png")   
 
 # Floating images style + animation
 floating_effect = f"""
@@ -385,29 +381,48 @@ floating_effect = f"""
 
 .floating-img {{
     position: fixed;
-    width: 200px;
     z-index: 0;
     animation: floaty 6s ease-in-out infinite;
     pointer-events: none;
 }}
 
-.f1 {{ top: 10%; left: 5%; animation-delay: 0s; }}
-.f2 {{ top: 20%; left: 25%; animation-delay: 1s; }}
-.f3 {{ top: 30%; left: 45%; animation-delay: 2s; }}
-.f4 {{ top: 40%; left: 65%; animation-delay: 3s; }}
-.f5 {{ top: 50%; left: 85%; animation-delay: 4s; }}
-.f6 {{ top: 60%; left: 15%; animation-delay: 5s; }}
-.f7 {{ top: 70%; left: 35%; animation-delay: 6s; }}
-.f8 {{ top: 80%; left: 55%; animation-delay: 7s; }}
+.f2 {{ top: 20%; left: 25%; animation-delay: 1s; width: 200px; }}
+.f3 {{ top: 30%; left: 45%; animation-delay: 2s; width: 200px; }}
+.f6 {{ top: 60%; left: 15%; animation-delay: 5s; width: 200px; }}
+.f7 {{ top: 80%; left: 70%; animation-delay: 6s; width: 200px; }}
+
+
+/* MOON at top-right */
+.moon-img {{
+    position: fixed;
+    top: 5%;
+    right: 5%;
+    width: 500px;
+    z-index: 2;
+    animation: floaty 8s ease-in-out infinite;
+}}
+
+/* BOTON at bottom-center */
+.boton-img {{
+    position: fixed;
+    bottom: 1%;
+    left: 20%;
+    transform: translateX(-50%);
+    width: 1000px;
+    z-index: 2;
+    animation: floaty 4s ease-in-out infinite;
+}}
 </style>
 
+<!-- Regular floating images -->
 <img src="data:image/png;base64,{witch2}" class="floating-img f2">
 <img src="data:image/png;base64,{witch3}" class="floating-img f3">
-<img src="data:image/png;base64,{witch4}" class="floating-img f4">
-<img src="data:image/png;base64,{witch5}" class="floating-img f5">
 <img src="data:image/png;base64,{witch6}" class="floating-img f6">
 <img src="data:image/png;base64,{witch7}" class="floating-img f7">
-<img src="data:image/png;base64,{witch8}" class="floating-img f8">
+
+<!-- Special moon and boton with separate styles -->
+<img src="data:image/png;base64,{witch9}" class="moon-img">
+<!-- <img src="data:image/png;base64,{witch10}" class="boton-img"> -->
 """
 
 # Add floating images to the page
@@ -421,10 +436,6 @@ try:
 
     # HTML and JavaScript code to play audio when clicked
     html_code = f"""
-    <!DOCTYPE html>
-    <html>
-    <head></head>
-    <body>
     <script>
     let audio = new Audio("data:audio/mp3;base64,{b64_sound}");
     audio.loop = true;
@@ -432,8 +443,6 @@ try:
         audio.play();
     }}, {{ once: true }});
     </script>
-    </body>
-    </html>
     """
 
     # Render HTML with audio in Streamlit
